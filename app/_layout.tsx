@@ -21,6 +21,10 @@ export default function RootLayout() {
             />
             <Stack.Screen name="stopwatch" options={{ title: "Stopwatch", headerShown: true }} />
 
+            <Stack.Screen name="exercise5" options={{ title: "Register", headerShown: true }} />
+
+
+
         </Stack>
         
     );

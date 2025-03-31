@@ -5,19 +5,19 @@ import {
   ScrollView, 
   useWindowDimensions, 
   StyleSheet, 
-  Pressable, 
+  TouchableOpacity, 
   Animated 
 } from "react-native";
 import RenderHTML from "react-native-render-html";
-import { useNavigation } from "@react-navigation/native";
+import { useRouter } from "expo-router";
 
 export default function Exercise() {
   const { width } = useWindowDimensions();
-  const navigation = useNavigation();
+  const router = useRouter();
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const exercises = [
-    { title: 'Exercise 3', description: 
+    { title: 'Exercise 3', href: "/login", description: 
       `<p>Create a login screen and add a title and description to the card.</p>
       <p>When the card is clicked, it should redirect to the login screen.</p>
       <ul>
@@ -26,8 +26,8 @@ export default function Exercise() {
         <li>Login (Button)</li>
       </ul>` 
     },
-    { title: 'Exercise 4', description: 'Create a stopwatch with two buttons.' },
-    { title: 'Exercise 5', description: 
+    { title: 'Exercise 4', href: "/stopwatch", description: 'Create a stopwatch with two buttons.' },
+    { title: 'Exercise 5', href: "/exercise5", description: 
       `<p>Create a register screen and add a title and description to the card.</p>
         <p>When the card is clicked, it should redirect to the register screen.</p>
            <ul>
@@ -38,10 +38,10 @@ export default function Exercise() {
         <li>Register (Button)</li>
       </ul>`
     },
-    { title: 'Exercise 6', description: 'Create a simple CRUD using useContext and useReducer' },
-    { title: 'Exercise 7', description: '...' },
-    { title: 'Exercise 8', description: '...' },
-    { title: 'Exercise 9', description: '...' },
+    { title: 'Exercise 6', href: "/exercise6", description: 'Create a simple CRUD using useContext and useReducer' },
+    { title: 'Exercise 7', href: "/exercise7", description: 'Quiz' },
+    { title: 'Exercise 8', href: "#", description: '...' },
+    { title: 'Exercise 9', href: "#", description: '...' },
   ];
 
   return (
@@ -49,19 +49,13 @@ export default function Exercise() {
       {exercises.map((exercise, index) => {
         const scrollY = new Animated.Value(0);
         return (
-          <Pressable 
+          <TouchableOpacity 
             key={index} 
             style={[
               styles.card, 
               hoveredIndex === index && styles.hoveredCard 
             ]}
-            onPress={() => {
-              if (exercise.title === "Exercise 3") {
-                navigation.navigate("login"); 
-              } else if (exercise.title === "Exercise 4") {
-                navigation.navigate("stopwatch"); // ✅ Mag-navigate sa Stopwatch
-              }
-            }}
+            onPress={() => router.push(exercise.href)}
             onMouseEnter={() => setHoveredIndex(index)} 
             onMouseLeave={() => setHoveredIndex(null)} 
           >
@@ -84,7 +78,7 @@ export default function Exercise() {
                 }) }]} />
               </View>
             )}
-          </Pressable>
+          </TouchableOpacity>
         );
       })}
     </ScrollView>
